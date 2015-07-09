@@ -2,6 +2,17 @@ require 'test_helper'
 
 class AlbumTest < ActiveSupport::TestCase
 
+  test "create album works" do
+    a = Album.new(title: 'Test Title', genre: 'Test Genre', artist: 'Test Artist', length: 1)
+    assert_equal a.valid?, true
+  end
+
+  test "save album works" do
+    a = Album.new(title: 'Test Title', genre: 'Test Genre', artist: 'Test Artist', length: 1)
+    a.save
+    assert Album.exists?(a.id)
+  end
+
   test "title must be present" do
     a = Album.new(genre: 'Test Genre', artist: 'Test Artist', length: 1)
     assert_equal a.valid?, false
