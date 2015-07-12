@@ -8,8 +8,7 @@ class AlbumTest < ActiveSupport::TestCase
   end
 
   test "save album works" do
-    a = Album.new(title: 'Test Title', genre: 'Test Genre', artist: 'Test Artist', length: 1)
-    a.save
+    a = Album.create!(title: 'Test Title', genre: 'Test Genre', artist: 'Test Artist', length: 1)
     assert Album.exists?(a.id)
   end
 
@@ -41,6 +40,8 @@ class AlbumTest < ActiveSupport::TestCase
   test "artist length must be greater than 0" do
     a = Album.new(title: 'Test Title', genre: 'Test Genre', artist: '', length: 1)
     refute a.valid?
+    # including the following on each refute test assures the right thing is false
+    assert a.errors.keys.include?(:artist)
   end
 
   test "genre length must be greater than 0" do
